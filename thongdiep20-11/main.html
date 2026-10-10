@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thư chúc mừng ngày 20-10</title>
+    <style>
+      :root {
+        --page-bg: #efe6dc;
+        --bg-soft: #f7f0e9;
+        --gold: #d8b56d;
+        --gold-deep: #c59c4e;
+        --paper: #f4ead8;
+        --paper-light: #f7f2eb;
+        --paper-vivid: #f3efe9;
+        --mauve: #7b4d62;
+        --mauve-deep: #5f3b4e;
+        --rose-700: #7d2d3d;
+        --text: #4a2d39;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: var(--page-bg);
+        color: var(--text);
+        transition: background-color 0.35s ease;
+      }
+
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+      }
+
+      .page {
+        position: relative;
+        min-height: 100vh;
+        width: 100%;
+        overflow: hidden;
+        padding: 2rem 1rem;
+        display: grid;
+        place-items: center;
+      }
+
+      .page::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 15% 20%, rgba(255,255,255,0.8) 0, transparent 22%);
+        opacity: 0.9;
+      }
+
+      .wrapper {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 64rem);
+        min-height: calc(100vh - 4rem);
+        display: grid;
+        place-items: center;
+        perspective: 1400px;
+      }
+
+      .cover,
+      .letter {
+        width: min(100%, 48rem);
+        transition: all 0.5s ease;
+      }
+
+      .cover.hidden,
+      .letter.hidden {
+        display: none;
+      }
+
+      .floating-layer {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .petal,
+      .star,
+      .heart-float {
+        position: absolute;
+        opacity: 0.8;
+        animation: floatUp linear infinite;
+      }
+
+      .petal {
+        width: 16px;
+        height: 22px;
+        background: linear-gradient(180deg, rgba(255,228,178,0.9), rgba(255,170,197,0.8));
+        border-radius: 60% 0 60% 0;
+        box-shadow: 0 0 12px rgba(255, 214, 132, 0.4);
+      }
+
+      .star {
+        color: rgba(255, 214, 102, 0.85);
+        font-size: 1rem;
+        text-shadow: 0 0 12px rgba(255, 214, 102, 0.5);
+      }
+
+      .heart-float {
+        color: rgba(209, 116, 141, 0.8);
+        font-size: 1.2rem;
+        text-shadow: 0 0 12px rgba(209, 116, 141, 0.35);
+      }
+
+      .cover-button {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        padding: 0;
+        cursor: pointer;
+        text-align: left;
+        color: inherit;
+      }
+
+      .cover-title {
+        text-align: center;
+        color: var(--text);
+        margin-bottom: 1.2rem;
+      }
+
+      .cover-title p {
+        margin: 0;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(74, 45, 57, 0.9);
+      }
+
+      .cover-title h1 {
+        margin: 0.6rem 0 0;
+        font-size: clamp(3rem, 6vw, 7rem);
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        line-height: 0.92;
+        color: var(--text);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .envelope {
+        position: relative;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        border-radius: 1.9rem;
+        border: 2px solid var(--gold);
+        background: linear-gradient(180deg, var(--paper-light) 0%, var(--paper) 52%, #e7d7b9 100%);
+        box-shadow: 0 8px 0 rgba(201, 173, 111, 0.7), 0 20px 40px rgba(80, 58, 38, 0.1);
+      }
+
+      .envelope::before {
+        content: "";
+        position: absolute;
+        inset: 0.75rem 0.75rem 0.75rem 0.75rem;
+        border-radius: 1.4rem;
+        background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0));
+      }
+
+      .envelope .bottom-flap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 52%;
+        background: linear-gradient(180deg, #b3818a 0%, #7a4d68 100%);
+        clip-path: polygon(0 0, 50% 72%, 100% 0, 100% 100%, 0 100%);
+      }
+
+      .envelope .top-flap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 58%;
+        background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(244,234,216,1) 100%);
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        transform-origin: top;
+        transition: transform 0.7s ease;
+      }
+
+      .envelope .lower-triangle {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+        clip-path: polygon(0 60%, 50% 100%, 100% 60%, 100% 100%, 0 100%);
+      }
+
+      .cover-button:hover .top-flap {
+        transform: rotateX(18deg);
+      }
+
+      .heart-badge {
+        position: absolute;
+        left: 50%;
+        top: 57%;
+        width: 5.5rem;
+        height: 5.5rem;
+        transform: translate(-50%, -50%);
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        border: 3px solid #f9f2e7;
+        background: linear-gradient(180deg, #e7d5aa 0%, #d5b36a 100%);
+        color: #fff;
+        box-shadow: 0 0 0 4px rgba(216,181,109,0.2);
+        transition: transform 0.2s ease;
+      }
+
+      .cover-button:hover .heart-badge {
+        transform: translate(-50%, -50%) scale(1.06);
+      }
+
+      .heart {
+        font-size: 2.7rem;
+        line-height: 1;
+      }
+
+      .signature-text {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 1.3rem;
+        text-align: center;
+        color: rgba(255,255,255,0.92);
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      .letter {
+        max-width: 54rem;
+        border-radius: 2rem;
+        border: 1px solid rgba(201, 170, 120, 0.8);
+        background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(251,247,241,0.94));
+        box-shadow: 0 28px 80px rgba(82, 60, 31, 0.18);
+        padding: 1.5rem;
+        backdrop-filter: blur(10px);
+        animation: letterIn 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        position: relative;
+      }
+
+      .letter::before {
+        content: "";
+        position: absolute;
+        inset: 18px;
+        border: 1px solid rgba(201, 170, 120, 0.8);
+        border-radius: 1.4rem;
+        pointer-events: none;
+      }
+
+      .letter-inner {
+        max-width: 40rem;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .mail-icon {
+        margin: 0 auto 1.2rem;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #d9b36b 0%, #8c5b2b 100%);
+        color: #fff;
+        font-size: 2rem;
+        box-shadow: 0 18px 35px rgba(140, 91, 43, 0.24);
+      }
+
+      .eyebrow {
+        margin: 0;
+        font-size: 0.8rem;
+        font-weight: 800;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold-deep);
+      }
+
+      .title {
+        margin: 0.9rem 0 0;
+        font-size: clamp(2.1rem, 6vw, 4rem);
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        color: var(--mauve-deep);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      .divider {
+        width: min(100%, 16rem);
+        height: 1px;
+        margin: 1.5rem auto 1.8rem;
+        background: linear-gradient(90deg, transparent, rgba(184,138,61,0.85), transparent);
+      }
+
+      .message {
+        min-height: 12rem;
+        margin: 0;
+        text-align: left;
+        font-size: clamp(1rem, 2vw, 1.15rem);
+        line-height: 1.8;
+        color: #3b3a47;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+
+      .caret {
+        display: inline-block;
+        width: 0.18rem;
+        height: 1.2rem;
+        margin-left: 0.3rem;
+        background: #b85e72;
+        vertical-align: middle;
+        animation: pulse 0.8s ease-in-out infinite;
+      }
+
+      .signature-box {
+        margin-top: 2rem;
+        border-radius: 1rem;
+        background: linear-gradient(90deg, #f9f3eb 0%, #f8f1f3 100%);
+        padding: 1.25rem;
+        border: 1px solid rgba(201, 170, 120, 0.8);
+      }
+
+      .signature-box p {
+        margin: 0;
+        color: #6d6878;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .signature-box strong {
+        display: block;
+        margin-top: 0.55rem;
+        font-size: clamp(1.2rem, 2vw, 1.7rem);
+        color: var(--rose-700);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      .sparkle {
+        position: absolute;
+        z-index: 10;
+        pointer-events: none;
+        color: rgba(250, 204, 21, 0.9);
+        text-shadow: 0 0 12px rgba(250, 204, 21, 0.5);
+        animation: ping 0.9s ease-in-out 1;
+      }
+
+      .action-row {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        gap: 0.9rem;
+        margin-top: 1.1rem;
+        opacity: 0;
+        transform: translateY(12px);
+        transition: all 0.35s ease;
+        flex-wrap: wrap;
+      }
+
+      .letter.visible + .action-row {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .action-btn {
+        border: 1px solid rgba(141, 91, 43, 0.4);
+        background: rgba(255,255,255,0.75);
+        color: var(--text);
+        box-shadow: 0 10px 22px rgba(80, 58, 38, 0.12);
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        padding: 0.8rem 1.2rem;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 26px rgba(80, 58, 38, 0.16);
+      }
+
+      .custom-panel {
+        display: none;
+        position: relative;
+        z-index: 2;
+        width: min(100%, 48rem);
+        margin: 1rem auto 0;
+        padding: 1.25rem;
+        border: 1px solid rgba(201, 170, 120, 0.75);
+        border-radius: 1.25rem;
+        background: rgba(255, 252, 247, 0.96);
+        box-shadow: 0 16px 38px rgba(80, 58, 38, 0.12);
+      }
+
+      .custom-panel.open {
+        display: block;
+        animation: letterIn 0.35s ease both;
+      }
+
+      .custom-panel h2 {
+        margin: 0 0 1rem;
+        color: var(--mauve-deep);
+        font-size: 1.15rem;
+      }
+
+      .custom-panel label,
+      .custom-panel legend {
+        color: var(--text);
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+
+      .theme-options {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        margin: 0.65rem 0 1.15rem;
+      }
+
+      .theme-swatch {
+        width: 2.25rem;
+        height: 2.25rem;
+        padding: 0;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 0 1px rgba(74, 45, 57, 0.3);
+        cursor: pointer;
+      }
+
+      .theme-swatch[aria-pressed="true"] {
+        box-shadow: 0 0 0 3px var(--mauve);
+      }
+
+      .custom-color {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0.2rem;
+        border: 1px solid rgba(74, 45, 57, 0.3);
+        border-radius: 50%;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .message-editor {
+        display: block;
+        width: 100%;
+        min-height: 7rem;
+        margin-top: 0.55rem;
+        padding: 0.8rem;
+        border: 1px solid rgba(141, 91, 43, 0.35);
+        border-radius: 0.75rem;
+        background: #fff;
+        color: var(--text);
+        font: inherit;
+        line-height: 1.6;
+        resize: vertical;
+      }
+
+      .editor-actions {
+        display: flex;
+        gap: 0.65rem;
+        flex-wrap: wrap;
+        margin-top: 0.75rem;
+      }
+
+      .editor-status {
+        min-height: 1.4em;
+        margin: 0.6rem 0 0;
+        color: var(--mauve-deep);
+        font-size: 0.9rem;
+      }
+
+      @keyframes letterIn {
+        from {
+          opacity: 0;
+          transform: translateY(45px) rotateX(-12deg) scale(0.92);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) rotateX(0) scale(1);
+        }
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.2; }
+      }
+
+      @keyframes ping {
+        0% { transform: scale(0.4); opacity: 0; }
+        40% { opacity: 1; }
+        100% { transform: scale(1.3); opacity: 0; }
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(110vh) rotate(0deg);
+          opacity: 0;
+        }
+        15% { opacity: 0.8; }
+        100% {
+          transform: translateY(-12vh) rotate(180deg);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .letter {
+          padding: 1rem;
+        }
+
+        .signature-text {
+          letter-spacing: 0.12em;
+        }
+
+        .action-btn {
+          flex: 1 1 auto;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="floating-layer" id="floatingLayer" aria-hidden="true"></div>
+    <main class="page">
+      <section class="wrapper">
+        <div id="cover" class="cover">
+          <button id="openLetterBtn" class="cover-button" type="button" aria-label="Mở bức thư chúc mừng ngày 20-10">
+            <div class="cover-title">
+              <p>Có một bức thư dành tặng thầy cô</p>
+              <h1>Chạm để mở thư</h1>
+            </div>
+
+            <div class="envelope" aria-hidden="true">
+              <div class="bottom-flap"></div>
+              <div class="top-flap"></div>
+              <div class="lower-triangle"></div>
+              <div class="heart-badge"><span class="heart">❤</span></div>
+              <p class="signature-text">NGUYỄN THỊ TRÂM ANH</p>
+            </div>
+          </button>
+        </div>
+
+        <article id="letter" class="letter hidden" aria-live="polite">
+          <div class="letter-inner">
+            <div class="mail-icon">✉</div>
+            <p class="eyebrow">Thư gửi thầy cô</p>
+            <h1 class="title">Chúc mừng ngày 20-10</h1>
+            <div class="divider"></div>
+            <p id="messageText" class="message" aria-live="polite"></p>
+            <div class="signature-box">
+              <p>Với tất cả lòng biết ơn và kính trọng</p>
+              <strong>Nguyễn Thị Trâm Anh</strong>
+            </div>
+          </div>
+        </article>
+
+        <div class="action-row" id="actionRow">
+          <button class="action-btn" id="replayBtn" type="button">Mở lại thư</button>
+          <button class="action-btn" id="customizeBtn" type="button" aria-expanded="false" aria-controls="customPanel">Tùy chỉnh thiệp</button>
+        </div>
+
+        <section class="custom-panel" id="customPanel" aria-labelledby="customTitle">
+          <h2 id="customTitle">Tạo lời chúc theo cách của bạn</h2>
+          <fieldset style="border: 0; margin: 0; padding: 0;">
+            <legend>Chọn màu nền</legend>
+            <div class="theme-options" role="group" aria-label="Màu nền gợi ý">
+              <button class="theme-swatch" type="button" data-color="#efe6dc" style="background:#efe6dc" aria-label="Màu giấy kem" aria-pressed="true"></button>
+              <button class="theme-swatch" type="button" data-color="#e5eff0" style="background:#e5eff0" aria-label="Màu xanh sương" aria-pressed="false"></button>
+              <button class="theme-swatch" type="button" data-color="#f4e3e8" style="background:#f4e3e8" aria-label="Màu hồng phấn" aria-pressed="false"></button>
+              <button class="theme-swatch" type="button" data-color="#e9e7f4" style="background:#e9e7f4" aria-label="Màu tím nhạt" aria-pressed="false"></button>
+              <button class="theme-swatch" type="button" data-color="#e7eee2" style="background:#e7eee2" aria-label="Màu xanh lá nhạt" aria-pressed="false"></button>
+              <label for="customColor">Tự chọn</label>
+              <input class="custom-color" id="customColor" type="color" value="#efe6dc" aria-label="Tự chọn màu nền" />
+            </div>
+          </fieldset>
+
+          <label for="messageEditor">Nội dung lời chúc</label>
+          <textarea class="message-editor" id="messageEditor" maxlength="1000" placeholder="Nhập lời chúc bạn muốn gửi đến thầy cô..."></textarea>
+          <div class="editor-actions">
+            <button class="action-btn" id="saveMessageBtn" type="button">Cập nhật lời chúc</button>
+            <button class="action-btn" id="resetMessageBtn" type="button">Dùng lời chúc ban đầu</button>
+          </div>
+          <p class="editor-status" id="editorStatus" role="status" aria-live="polite"></p>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      const defaultMessage = "Nhân ngày 20-10, em xin kính chúc quý thầy cô luôn mạnh khỏe, hạnh phúc và thành công. Cảm ơn thầy cô đã tận tâm truyền đạt kiến thức, chắp cánh ước mơ và soi sáng con đường tương lai cho chúng em. Chúc thầy cô luôn giữ được ngọn lửa nhiệt huyết và có thật nhiều niềm vui trong cuộc sống!";
+      let message = defaultMessage;
+      const cover = document.getElementById("cover");
+      const letter = document.getElementById("letter");
+      const actionRow = document.getElementById("actionRow");
+      const openLetterBtn = document.getElementById("openLetterBtn");
+      const replayBtn = document.getElementById("replayBtn");
+      const customizeBtn = document.getElementById("customizeBtn");
+      const customPanel = document.getElementById("customPanel");
+      const messageEditor = document.getElementById("messageEditor");
+      const saveMessageBtn = document.getElementById("saveMessageBtn");
+      const resetMessageBtn = document.getElementById("resetMessageBtn");
+      const editorStatus = document.getElementById("editorStatus");
+      const customColor = document.getElementById("customColor");
+      const themeSwatches = document.querySelectorAll(".theme-swatch");
+      const messageText = document.getElementById("messageText");
+      const floatingLayer = document.getElementById("floatingLayer");
+      const settingsKey = "greeting-card-settings";
+      let backgroundColor = "#efe6dc";
+      let opened = false;
+      let typingTimer = null;
+      let typedIndex = 0;
+      let audioContext = null;
+
+      function loadSettings() {
+        try {
+          const savedSettings = localStorage.getItem(settingsKey);
+          if (!savedSettings) return;
+
+          const settings = JSON.parse(savedSettings);
+          if (typeof settings.message === "string" && settings.message.trim()) {
+            message = settings.message.trim().slice(0, 1000);
+            messageEditor.value = message;
+          }
+
+          if (typeof settings.backgroundColor === "string" && /^#[0-9a-f]{6}$/i.test(settings.backgroundColor)) {
+            applyBackground(settings.backgroundColor, false);
+          }
+        } catch (error) {
+          console.warn("Không thể tải tùy chỉnh thiệp đã lưu.", error);
+          editorStatus.textContent = "Không thể đọc dữ liệu đã lưu. Thiệp đang dùng nội dung mặc định.";
+        }
+      }
+
+      function saveSettings() {
+        try {
+          localStorage.setItem(settingsKey, JSON.stringify({
+            message,
+            backgroundColor,
+          }));
+          return true;
+        } catch (error) {
+          console.warn("Không thể lưu tùy chỉnh thiệp.", error);
+          return false;
+        }
+      }
+
+      function playOpenSound() {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+
+        try {
+          audioContext = audioContext || new AudioContextClass();
+          const now = audioContext.currentTime;
+          [523.25, 659.25, 783.99].forEach((frequency, index) => {
+            const oscillator = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            const startTime = now + index * 0.09;
+            oscillator.type = "sine";
+            oscillator.frequency.value = frequency;
+            gain.gain.setValueAtTime(0, startTime);
+            gain.gain.linearRampToValueAtTime(0.12, startTime + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.45);
+            oscillator.connect(gain);
+            gain.connect(audioContext.destination);
+            oscillator.start(startTime);
+            oscillator.stop(startTime + 0.5);
+          });
+        } catch (error) {
+          console.warn("Không thể phát âm thanh mở thiệp.", error);
+        }
+      }
+
+      function createParticles() {
+        const existing = document.querySelectorAll(".sparkle");
+        existing.forEach((particle) => particle.remove());
+
+        for (let i = 0; i < 22; i++) {
+          const sparkle = document.createElement("span");
+          sparkle.className = "sparkle";
+          sparkle.textContent = "✦";
+          sparkle.style.left = `${18 + Math.random() * 64}%`;
+          sparkle.style.top = `${25 + Math.random() * 48}%`;
+          sparkle.style.fontSize = `${12 + Math.random() * 18}px`;
+          sparkle.style.animationDelay = `${Math.random() * 0.45}s`;
+          document.querySelector(".page").appendChild(sparkle);
+        }
+
+        setTimeout(() => {
+          document.querySelectorAll(".sparkle").forEach((particle) => particle.remove());
+        }, 1800);
+      }
+
+      function createAmbientFloats() {
+        floatingLayer.innerHTML = "";
+        const shapes = ["❤", "✦", "❀", "✧"];
+
+        for (let i = 0; i < 18; i++) {
+          const item = document.createElement("span");
+          const shape = shapes[i % shapes.length];
+          item.className = i % 3 === 0 ? "heart-float" : i % 2 === 0 ? "star" : "petal";
+          item.textContent = shape;
+          item.style.left = `${Math.random() * 100}%`;
+          item.style.top = `${Math.random() * 100}%`;
+          item.style.animationDuration = `${10 + Math.random() * 14}s`;
+          item.style.animationDelay = `${Math.random() * 6}s`;
+          floatingLayer.appendChild(item);
+        }
+      }
+
+      function typeMessage() {
+        clearInterval(typingTimer);
+        typedIndex = 0;
+        const characters = Array.from(message);
+        messageText.replaceChildren();
+
+        typingTimer = setInterval(() => {
+          typedIndex += 1;
+          const isTyping = typedIndex < characters.length;
+          messageText.replaceChildren(document.createTextNode(characters.slice(0, typedIndex).join("")));
+          if (isTyping) {
+            const caret = document.createElement("span");
+            caret.className = "caret";
+            caret.setAttribute("aria-hidden", "true");
+            messageText.appendChild(caret);
+          } else {
+            clearInterval(typingTimer);
+          }
+        }, 25);
+      }
+
+      function applyBackground(color, persist = true) {
+        backgroundColor = color;
+        document.documentElement.style.setProperty("--page-bg", color);
+        customColor.value = color;
+        themeSwatches.forEach((swatch) => {
+          swatch.setAttribute("aria-pressed", String(swatch.dataset.color === color));
+        });
+        if (persist && !saveSettings()) {
+          editorStatus.textContent = "Màu nền đã đổi nhưng trình duyệt không cho phép lưu lại.";
+        }
+      }
+
+      function saveMessage() {
+        const updatedMessage = messageEditor.value.trim();
+        if (!updatedMessage) {
+          editorStatus.textContent = "Lời chúc chưa có nội dung. Hãy nhập lời chúc trước khi cập nhật.";
+          messageEditor.focus();
+          return;
+        }
+
+        message = updatedMessage;
+        messageEditor.value = message;
+        editorStatus.textContent = saveSettings()
+          ? "Đã cập nhật và lưu lời chúc trên thiệp."
+          : "Đã cập nhật lời chúc nhưng trình duyệt không cho phép lưu lại.";
+        if (opened) typeMessage();
+      }
+
+      function openLetter() {
+        if (opened) return;
+        opened = true;
+        playOpenSound();
+        createParticles();
+        createAmbientFloats();
+        cover.classList.add("hidden");
+        letter.classList.remove("hidden");
+        letter.classList.add("visible");
+        actionRow.classList.add("visible");
+        typeMessage();
+        messageEditor.value = message;
+      }
+
+      function replayLetter() {
+        clearInterval(typingTimer);
+        opened = false;
+        letter.classList.add("hidden");
+        letter.classList.remove("visible");
+        cover.classList.remove("hidden");
+        actionRow.classList.remove("visible");
+        customPanel.classList.remove("open");
+        customizeBtn.setAttribute("aria-expanded", "false");
+        editorStatus.textContent = "";
+        messageText.replaceChildren();
+        playOpenSound();
+        createAmbientFloats();
+        createParticles();
+      }
+
+      function toggleCustomization() {
+        const isOpen = customPanel.classList.toggle("open");
+        customizeBtn.setAttribute("aria-expanded", String(isOpen));
+        if (isOpen) messageEditor.focus();
+      }
+
+      openLetterBtn.addEventListener("click", openLetter);
+      replayBtn.addEventListener("click", replayLetter);
+      customizeBtn.addEventListener("click", toggleCustomization);
+      saveMessageBtn.addEventListener("click", saveMessage);
+      resetMessageBtn.addEventListener("click", () => {
+        message = defaultMessage;
+        messageEditor.value = defaultMessage;
+        editorStatus.textContent = saveSettings()
+          ? "Đã khôi phục và lưu lời chúc ban đầu."
+          : "Đã khôi phục lời chúc nhưng trình duyệt không cho phép lưu lại.";
+        if (opened) typeMessage();
+      });
+      themeSwatches.forEach((swatch) => {
+        swatch.addEventListener("click", () => applyBackground(swatch.dataset.color));
+      });
+      customColor.addEventListener("input", () => applyBackground(customColor.value));
+      messageEditor.value = defaultMessage;
+      loadSettings();
+      createAmbientFloats();
+    </script>
+  </body>
+</html>
